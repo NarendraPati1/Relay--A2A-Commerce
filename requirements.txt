@@ -1,0 +1,10 @@
+langchain
+langfuse
+langchain-groq
+langgraph
+langchain
+langchain-groq
+fastapi
+uvicorn
+python-dotenv
+a2a-sdk

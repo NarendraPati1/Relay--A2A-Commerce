@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Environment variables
+.env
+
+bharat-builds-ticket-narendra.png
+Merchant Revenue Agent.pdf
+ChatGPT Image Sep 8, 2026, 12_33_54 AM.png

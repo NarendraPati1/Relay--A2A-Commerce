@@ -1,0 +1,30 @@
+{
+  "model": "all-MiniLM-L6-v2",
+  "dimension": 384,
+  "products": [
+    {
+      "id": "nescafe_classic_100g",
+      "name": "Nescafe Classic 100g",
+      "description": "Instant coffee powder, classic Nescafe coffee, 100g pack",
+      "category": "coffee",
+      "brand": "Nescafe",
+      "pack_size": "100g"
+    },
+    {
+      "id": "amul_taaza_milk_1l",
+      "name": "Amul Taaza Milk 1L",
+      "description": "Fresh toned milk, 1 litre packet",
+      "category": "milk",
+      "brand": "Amul",
+      "pack_size": "1L"
+    },
+    {
+      "id": "local_filter_coffee_250g",
+      "name": "Local Filter Coffee 250g",
+      "description": "Traditional filter coffee powder, 250g pack",
+      "category": "coffee",
+      "brand": "LocalMart",
+      "pack_size": "250g"
+    }
+  ]
+}
