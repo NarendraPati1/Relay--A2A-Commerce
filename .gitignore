@@ -15,3 +15,6 @@ wheels/
 bharat-builds-ticket-narendra.png
 Merchant Revenue Agent.pdf
 ChatGPT Image Sep 8, 2026, 12_33_54 AM.png
+# Generated ML artifacts
+backend/data/models/
+backend/data/index/
