@@ -8,15 +8,15 @@ Relay does not place an order automatically. It shows the cart to the user and w
 
 ## Architecture diagram
 
-![Relay architecture diagram](images/architecture.png)
+![Relay architecture diagram](docs/images/architecture.png)
 
 The diagram shows the complete path from a user's natural-language request through the Buyer Agent, LangGraph workflow, memory and retrieval services, A2A merchant discovery, negotiation, human approval, and merchant-owned payment settlement.
 
 The supporting workflow and capability views are also kept here because they describe system behavior rather than end-user screens.
 
-![Relay execution architecture](images/execution-architecture.png)
+![Relay execution architecture](docs/images/execution-architecture.png)
 
-![Relay core capabilities](images/core-capabilities.jpg)
+![Relay core capabilities](docs/images/core-capabilities.jpg)
 
 The system has three main parts:
 
@@ -179,3 +179,5 @@ docker-compose.yml                Local container deployment
 ## 9. One-sentence summary
 
 Relay uses a stateful Buyer Agent to plan and compare shopping options across independent A2A Merchant Agents, pauses for human approval, and keeps payment creation and verification inside the selected merchant boundary.
+
+
