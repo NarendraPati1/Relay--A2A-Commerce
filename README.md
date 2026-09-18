@@ -207,7 +207,7 @@ after/
 ## Tech Stack
 
 | Layer | Technology |
-|---|---|
+| --- | --- |
 | **Orchestration** | LangGraph (`StateGraph`, async node pipeline) |
 | **LLM Inference** | Groq `openai/gpt-oss-120b` (via `langchain-groq`) |
 | **Agent Protocol** | Google A2A SDK over JSON-RPC 2.0 |
@@ -299,7 +299,7 @@ The container handles index initialization, runs the Starlette ASGI server on po
 ### Buyer Endpoints
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/` | Serves landing page & web workspace |
 | `GET` | `/health` | Health check endpoint (`{"status":"ok"}`) |
 | `GET` | `/v1/checkout/config` | Returns public Razorpay key ID |
@@ -319,7 +319,7 @@ The container handles index initialization, runs the Starlette ASGI server on po
 ### Merchant Endpoints
 
 | Method | Endpoint | Description |
-|---|---|---|
+| --- | --- | --- |
 | `GET` | `/.well-known/agent-card.json` | A2A Agent Card specification |
 | `POST` | `/` | A2A JSON-RPC task handler |
 | `POST` | `/v1/payments/verify` | Server-side HMAC-SHA256 payment signature verification |
@@ -350,5 +350,3 @@ Tests cover:
 2. **Deterministic Human Approval Gate**: LangGraph state machine enforces human authorization before `purchase` state transition is reachable.
 3. **Cryptographic Settlement**: Payment callbacks are validated against merchant HMAC-SHA256 secrets before marking orders complete in the ledger.
 4. **Prompt Injection Firewalls**: Merchant payloads and product descriptions pass through sanitization filters before feeding LLM reasoning chains.
-
-
