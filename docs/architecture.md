@@ -6,6 +6,18 @@ Relay is an agent-to-agent shopping system. A user describes what they want in n
 
 Relay does not place an order automatically. It shows the cart to the user and waits for explicit approval. After approval, the selected Merchant Agent creates the payment order and verifies the payment.
 
+## Architecture diagram
+
+![Relay architecture diagram](images/architecture.png)
+
+The diagram shows the complete path from a user's natural-language request through the Buyer Agent, LangGraph workflow, memory and retrieval services, A2A merchant discovery, negotiation, human approval, and merchant-owned payment settlement.
+
+The supporting workflow and capability views are also kept here because they describe system behavior rather than end-user screens.
+
+![Relay execution architecture](images/execution-architecture.png)
+
+![Relay core capabilities](images/core-capabilities.jpg)
+
 The system has three main parts:
 
 1. The user interface and Buyer Agent.
