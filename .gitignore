@@ -7,7 +7,21 @@ wheels/
 *.egg-info
 
 # Virtual environments
-.venv
+.venv/
+
+# Python tooling and test caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE and OS files
+.idea/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
 
 # Environment variables
 .env
@@ -18,3 +32,24 @@ ChatGPT Image Sep 8, 2026, 12_33_54 AM.png
 # Generated ML artifacts
 backend/data/models/
 backend/data/index/
+backend/data/buyer_memory.sqlite3
+backend/data/merchant_transactions.sqlite3
+backend/data/merchant_ledgers/
+
+# Local logs, runtime output, and temporary exports
+*.log
+*.tmp
+*.bak
+*.sqlite
+*.sqlite3
+tmp/
+temp/
+
+# Large local images and exported artifacts
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.pdf
+!docs/images/
+!docs/images/**

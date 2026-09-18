@@ -1,69 +1,109 @@
-from agents.buyer.llm import negotiation_decision_llm
+import re
+
 from agents.buyer.a2a_client import ask_merchant
 
-
-# ============================================================
-# 1. DECIDE WHETHER TO NEGOTIATE
-# ============================================================
 
 def decide_negotiation(
     user_query: str,
     shopping_goal: dict,
     selected_offer: dict,
 ):
-    result = negotiation_decision_llm.invoke({
-        "user_query": user_query,
-        "shopping_goal": shopping_goal,
-        "selected_offer": selected_offer,
-    })
+    quantity = (
+        selected_offer.get("effective_quantity")
+        or selected_offer.get("required_quantity")
+        or shopping_goal.get("quantity")
+        or 1
+    )
+    asks_for_price = any(
+        phrase in user_query.lower()
+        for phrase in ("discount", "negotiate", "best price", "better price", "deal")
+    )
+    should_negotiate = bool(
+        asks_for_price or shopping_goal.get("budget") is not None or quantity >= 3
+    )
 
     return {
-        "negotiation_requested": result.should_negotiate,
-        "negotiation_reasoning": result.reasoning,
+        "negotiation_requested": should_negotiate,
+        "negotiation_reasoning": (
+            "Customer requested a better price."
+            if asks_for_price
+            else "Quantity or budget makes a bulk-price inquiry worthwhile."
+            if should_negotiate
+            else "No quantity, budget, or price request justifies negotiation."
+        ),
     }
 
-
-# ============================================================
-# 2. NEGOTIATE WITH MERCHANT
-# ============================================================
 
 async def negotiate_offer(
     selected_offer: dict,
     shopping_goal: dict,
 ):
-    merchant_url = selected_offer["merchant_url"]
-    product_name = selected_offer["product_name"]
-    current_price = selected_offer["price"]
+    merchant_url = selected_offer.get("merchant_url")
+    current_price = selected_offer.get("price")
+    product_name = selected_offer.get("product_name")
+    quantity = (
+        selected_offer.get("effective_quantity")
+        or selected_offer.get("required_quantity")
+        or shopping_goal.get("quantity")
+        or 1
+    )
+
+    if not merchant_url or current_price is None:
+        return {
+            "accepted": False,
+            "original_price": current_price,
+            "merchant_response": "Negotiation unavailable because price or merchant endpoint is missing.",
+        }
 
     budget = shopping_goal.get("budget")
 
-    # If customer has a budget, use it as the
-    # negotiation target.
-    if budget is not None:
-        target_price = budget
-    else:
-        # Otherwise ask merchant for its best price.
-        target_price = current_price
+    query = f"""
+NEGOTIATE PRODUCT OFFER
 
-    negotiation_query = (
-        f"NEGOTIATE\n"
-        f"Product: {product_name}\n"
-        f"Current price: ₹{current_price}\n"
-        f"Customer target price: ₹{target_price}\n"
-        f"Quantity: {shopping_goal.get('quantity')}\n"
-        f"Please provide your best possible price."
+Product: {product_name}
+Current unit price: ₹{current_price}
+Quantity: {quantity}
+Customer budget/target if supplied: {budget}
+
+The customer is considering this purchase. Please provide your best
+available price for this quantity, including any legitimate bulk discount.
+Do not invent a discount. If no discount is available, say so clearly.
+This is a price inquiry, not purchase authorization.
+"""
+
+    response = await ask_merchant(query.strip(), merchant_url)
+
+    match = re.search(
+        r"final unit price\s*:\s*[₹Rs.INR ]*([0-9]+(?:\.[0-9]+)?)",
+        response,
+        re.IGNORECASE,
     )
-
-    response = await ask_merchant(
-        query=negotiation_query,
-        merchant_url=merchant_url,
+    proposed = float(match.group(1)) if match else None
+    accepted = proposed is not None and 0 <= proposed < current_price
+    effective_unit_price = proposed if accepted else current_price
+    discount_amount = (
+        round(current_price - effective_unit_price, 2) if accepted else None
+    )
+    discount_percent = (
+        round((discount_amount / current_price) * 100, 2)
+        if accepted and current_price else None
     )
 
     return {
-        "merchant": selected_offer["merchant"],
+        "merchant": selected_offer.get("merchant"),
         "merchant_url": merchant_url,
         "product_name": product_name,
         "original_price": current_price,
-        "target_price": target_price,
+        "proposed_price": proposed,
+        "effective_unit_price": effective_unit_price,
+        "quantity": quantity,
+        "estimated_total": effective_unit_price * quantity,
+        "accepted": accepted,
+        "discount_amount": discount_amount,
+        "discount_percent": discount_percent,
         "merchant_response": response,
+        "reasoning": (
+            "Merchant supplied a lower final unit price."
+            if accepted else "Merchant did not supply a lower verified final price."
+        ),
     }

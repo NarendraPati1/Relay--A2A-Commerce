@@ -1,14 +1,10 @@
+from agents.merchant.config import MERCHANTS
+
+
 MERCHANT_REGISTRY = [
     {
-        "name": "DMart",
-        "agent_url": "http://127.0.0.1:9000",
-    },
-    {
-        "name": "Reliance",
-        "agent_url": "http://127.0.0.1:9001",
-    },
-    {
-        "name": "LocalMart",
-        "agent_url": "http://127.0.0.1:9002",
-    },
+        "name": merchant["name"],
+        "agent_url": f"http://127.0.0.1:{merchant['port']}",
+    }
+    for merchant in MERCHANTS.values()
 ]

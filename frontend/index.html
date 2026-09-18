@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relay — Autonomous A2A Shopping Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+  <script src="https://checkout.razorpay.com/v1/checkout.js" defer></script>
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <section id="landing" class="landing">
+    <header class="nav">
+      <a class="brand" href="#top">relay <sup>TM</sup></a>
+      <nav class="navlinks">
+        <a href="#how">How it works</a>
+        <a href="#features">What it does</a>
+      </nav>
+      <button class="dark-pill" data-open-demo>Open workspace <span>-></span></button>
+    </header>    <section id="top" class="hero">
+      <div class="grid-bg"></div>
+      <div class="sphere-wrap" aria-hidden="true"><canvas id="ascii-sphere"></canvas></div>
+      <div class="hero-copy">
+        <p class="eyebrow">Built on the Agent-to-Agent (A2A) Protocol & LangGraph</p>
+        <h1>Autonomous Commerce.<br><span class="underline">Multi-Agent Negotiation.</span></h1>
+        <div class="hero-bottom">
+          <p class="lede">Relay orchestrates distributed buyer-to-merchant commerce workflows — converting natural language into structured shopping goals, querying live A2A merchant agents, comparing verified offers, and executing secure settlements under strict human confirmation.</p>
+          <div class="cta">
+            <button class="dark-pill" data-open-demo>Launch workspace <span>-></span></button>
+            <a class="pill" href="#how">Explore architecture</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how" class="band">
+      <div class="section">
+        <p class="kicker">Execution Architecture</p>
+        <h2>Deterministic State Machine.<br>From Intent to Settlement.</h2>
+        <p class="section-intro">Relay executes a 17-node LangGraph pipeline across distributed A2A merchant services — orchestrating semantic catalog retrieval, structured multi-agent negotiation, and cryptographically verified payment reconciliation.</p>
+        <div class="steps">
+          <article class="step"><span class="num">01</span><h3>Intent & Requirement Parsing</h3><p>Translates unstructured user requirements, budget boundaries, and bulk quantities into typed schema specifications and shopping goal states.</p></article>
+          <article class="step"><span class="num">02</span><h3>A2A Merchant Orchestration</h3><p>Queries independent merchant agents over the A2A JSON-RPC protocol, evaluates live stock availability, and negotiates volume pricing in real time.</p></article>
+          <article class="step"><span class="num">03</span><h3>Audited Settlement Gate</h3><p>Renders an itemized cost breakdown with verifiable unit economics, triggering merchant-side Razorpay order creation only upon explicit user confirmation.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="section">
+      <div class="features-header">
+        <p class="kicker">Core Capabilities</p>
+        <h2>Engineered for Precision.<br>Built for Autonomy.</h2>
+        <p class="section-intro">A production-grade multi-agent architecture executing deterministic state transitions across independent buyer and merchant services with full auditability.</p>
+      </div>
+      <div class="cap-grid">
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">01</span>
+          </div>
+          <h3>Semantic Intent Decomposition</h3>
+          <p>Extracts product specifications, volume constraints, and brand preferences into strictly typed Pydantic data models.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">02</span>
+          </div>
+          <h3>Distributed Merchant Discovery</h3>
+          <p>Resolves A2A agent cards and queries live inventory matrices simultaneously across multiple vendor nodes.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">03</span>
+          </div>
+          <h3>Transparent Cost Normalization</h3>
+          <p>Audits base prices, applicable discounts, and fulfillment fees into verifiable line-item unit economics.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">04</span>
+          </div>
+          <h3>Upsell & Add-On Isolation</h3>
+          <p>Evaluates merchant cross-sell suggestions against user budget constraints without compromising primary goals.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">05</span>
+          </div>
+          <h3>Multi-Objective Offer Ranking</h3>
+          <p>Ranks quotes using composite scoring across price efficiency, verified stock levels, and merchant reliability.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">06</span>
+          </div>
+          <h3>Human-in-the-Loop Safety Gate</h3>
+          <p>Enforces state machine gating where financial transactions cannot proceed without explicit user authorization.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">07</span>
+          </div>
+          <h3>Direct Merchant Settlement</h3>
+          <p>Executes merchant-created Razorpay payment sessions with cryptographic HMAC signature verification.</p>
+        </div>
+        <div class="cap-card">
+          <div class="cap-top">
+            <span class="num">08</span>
+          </div>
+          <h3>Stateful Memory & Audit Ledger</h3>
+          <p>Persists multi-turn session snapshots, entity preferences, and episodic shopping records in durable SQLite storage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing" class="dark-band">
+      <div class="section">
+        <div>
+          <p class="kicker">A2A Protocol Standard</p>
+          <h2>Decentralized Discovery.<br>Real-Time Commerce.</h2>
+        </div>
+        <div>
+          <p class="section-intro">Built on the open Agent-to-Agent (A2A) JSON-RPC specification. Buyer and merchant agents communicate directly via structured schemas with zero hallucinated pricing or stale inventory.</p>
+          <button class="pill" data-open-demo>Open the agent workspace <span>-></span></button>
+        </div>
+      </div>
+    </section>
+    </section>
+  </section>
+
+  <section id="workspace" class="workspace">
+    <header class="workspace-header">
+      <div class="workspace-brand">
+        <div class="brand-logo-mark">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        </div>
+        <div class="brand-meta">
+          <span class="brand-name">relay<strong>.ai</strong></span>
+          <span class="brand-sub">A2A Buyer Agent · LangGraph</span>
+        </div>
+      </div>
+      <div class="user-area">
+        <button id="back-home" class="nav-item small back-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Home</span>
+        </button>
+      </div>
+    </header>
+    <div class="workspace-body">
+      <aside class="side-nav">
+        <button id="new-request" class="new-request">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>New request</span>
+        </button>
+        <p class="side-heading">WORKSPACE</p>
+        <button id="conversation-nav" class="nav-item active">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+          <span>Conversation</span>
+        </button>
+        <button id="payments-nav" class="nav-item">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+          <span>Payments</span>
+        </button>
+        <p class="side-heading chat-heading">CHATS</p>
+        <div id="conversation-list" class="conversation-list" aria-label="Previous conversations"></div>
+
+      </aside>
+
+      <main class="work-main">
+        <header class="request-header">
+          <div>
+            <h1 id="request-title" class="request-title">New shopping request</h1>
+            <p id="request-subtitle" class="request-subtitle">Describe what you want — product, quantity, budget, brand. The agent handles the rest.</p>
+          </div>
+          <span id="request-state" class="status-badge ready">Ready</span>
+        </header>
+
+        <section id="conversation-view" class="conversation">
+          <div id="messages" class="messages">
+            <div class="event-divider"><span>Your workspace is ready</span></div>
+            <div class="message agent">
+              <div class="avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+              </div>
+              <div class="bubble-wrap">
+                <p class="message-meta">Shopping assistant · now</p>
+                <div class="bubble">Hi — I'm your Relay agent. Tell me what you want to buy: a product name, how many, your budget, or anything specific like brand or pack size. I'll search the catalog, contact merchant agents over A2A, compare their live offers, and prepare a cart for you to review. Nothing gets charged until you approve.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="payments-view" class="payments-view hidden">
+          <div class="payments-heading">
+            <p class="kicker">Payment activity</p>
+            <h2>Payments settled by the agent</h2>
+            <p>Payment orders are created by the merchant agent only after you confirm a cart. Every transaction — order ID, amount, merchant, and Razorpay verification status — is logged here.</p>
+          </div>
+          <div id="payment-history" class="payment-history">
+            <div class="empty-payments">
+              <strong>No payments yet</strong>
+              <span>Approve a cart and the merchant's Razorpay order will appear here with full verification details.</span>
+            </div>
+          </div>
+        </section>
+
+        <footer id="composer-area" class="composer-area">
+          <form id="chat-form" class="composer">
+            <textarea id="message" maxlength="4000" placeholder="e.g. I need 3 packets of Nescafe Classic 100g under ₹700…" rows="1" required></textarea>
+            <button id="send" class="send" type="submit" aria-label="Send message">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 19-7z"/></svg>
+            </button>
+          </form>
+          <div id="demo-status" class="demo-status"></div>
+        </footer>
+      </main>
+
+      <aside class="right-panel">
+        <section class="right-section cart-section">
+          <div class="panel-heading">
+            <div class="panel-heading-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+              <h2>Cart</h2>
+            </div>
+            <span id="cart-state" class="cart-state">Empty</span>
+          </div>
+          <div id="cart" class="cart">
+            <div class="cart-empty">
+              <div class="empty-icon-wrap">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+              </div>
+              <strong>Your cart is empty</strong>
+              <span>Send a request and I’ll add the best verified options here.</span>
+            </div>
+          </div>
+          <div id="pay-area"></div>
+        </section>
+
+        <section class="right-section agent-section">
+          <div class="panel-heading">
+            <div class="panel-heading-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><circle cx="12" cy="11" r="2"/></svg>
+              <h2>Merchants</h2>
+            </div>
+            <span id="network-state" class="network-state"><i></i> Standing by</span>
+          </div>
+          <div id="agent-presence" class="agent-presence"></div>
+          <div id="agent-thread" class="agent-thread" aria-live="polite">
+            <div class="agent-empty">Connected merchant agents will appear here as Relay queries them. Each dot shows a live A2A agent responding to this request.</div>
+          </div>
+        </section>
+
+        <section class="right-section workflow-section">
+          <div class="panel-heading">
+            <div class="panel-heading-title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              <h2>Request progress</h2>
+            </div>
+          </div>
+          <div id="workflow-progress" class="workflow-progress">
+            <div class="workflow-empty">Each reasoning step the agent takes — understand, search, query merchants, evaluate, negotiate — will appear here live as your request is processed.</div>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </section>
+</body>
+</html>

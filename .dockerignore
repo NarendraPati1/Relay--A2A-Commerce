@@ -1,0 +1,23 @@
+# .dockerignore
+.git
+.gitignore
+.venv
+.vscode
+.pytest_cache
+__pycache__
+*.py[cod]
+*.egg-info
+.env
+tests/
+*.md
+*.png
+*.jpg
+*.pdf
+uv.lock
+pyproject.toml
+requirements.txt
+backend/data/models/
+backend/data/index/
+backend/data/buyer_memory.sqlite3
+backend/data/merchant_transactions.sqlite3
+backend/data/merchant_ledgers/*.sqlite3

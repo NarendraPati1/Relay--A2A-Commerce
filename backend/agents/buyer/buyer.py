@@ -1,267 +1,64 @@
 import asyncio
+import argparse
+import os
 import uuid
 
 from agents.buyer.graph import buyer_graph
+from agents.buyer.service import BuyerService
 
 
-# ============================================================
-# BUYER AGENT CLI
-# ============================================================
-
-async def main():
-
+async def main(buyer_id: str | None = None):
     print("Buyer Agent")
     print("Type 'exit' to quit.\n")
 
-    # --------------------------------------------------------
-    # Session ID
-    # --------------------------------------------------------
-    #
-    # We keep one session ID for the current CLI session.
-    #
-    # Later this can be connected to a database/checkpointer
-    # so the conversation can survive application restarts.
-    # --------------------------------------------------------
-
     session_id = str(uuid.uuid4())
-
-    # --------------------------------------------------------
-    # Keep the previous state in memory.
-    #
-    # This becomes important for:
-    #
-    # Cart → confirmation → purchase
-    #
-    # --------------------------------------------------------
-
-    current_state = {
-        "session_id": session_id,
-    }
+    buyer_id = buyer_id or os.getenv("BUYER_ID") or f"session:{session_id}"
+    buyer_service = BuyerService(buyer_graph)
 
     while True:
+        query = input("You: ").strip()
 
-        query = input("You: ")
-
-        # ----------------------------------------------------
-        # Exit
-        # ----------------------------------------------------
-
-        if query.lower().strip() == "exit":
+        if query.lower() == "exit":
             break
 
-        if not query.strip():
+        if not query:
             continue
 
-        # ====================================================
-        # HUMAN CONFIRMATION
-        # ====================================================
-        #
-        # If the previous graph execution stopped with:
-        #
-        # awaiting_confirmation = True
-        #
-        # then this input is treated as the user's decision.
-        # ====================================================
-
-        if current_state.get(
-            "awaiting_confirmation",
-            False
-        ):
-
-            confirmation = query.lower().strip()
-
-            if confirmation in {
-                "yes",
-                "y",
-                "confirm",
-                "proceed",
-                "buy",
-            }:
-
-                print(
-                    "\n→ Purchase confirmed by user.\n"
-                )
-
-                # --------------------------------------------
-                # IMPORTANT
-                #
-                # We will wire the actual purchase continuation
-                # into the graph/Razorpay flow next.
-                # --------------------------------------------
-
-                current_state[
-                    "user_confirmation"
-                ] = "yes"
-
-                current_state[
-                    "awaiting_confirmation"
-                ] = False
-
-                # For now, show that confirmation was received.
-                print(
-                    "Purchase confirmation received."
-                )
-
-                print(
-                    "\nBUYER STATE:"
-                )
-
-                print(current_state)
-
-                print()
-
-                continue
-
-            elif confirmation in {
-                "no",
-                "n",
-                "cancel",
-                "stop",
-            }:
-
-                print(
-                    "\n→ Purchase cancelled.\n"
-                )
-
-                current_state[
-                    "user_confirmation"
-                ] = "no"
-
-                current_state[
-                    "awaiting_confirmation"
-                ] = False
-
-                current_state[
-                    "purchase_ready"
-                ] = False
-
-                current_state[
-                    "cart_payment_status"
-                ] = "cancelled"
-
-                current_state[
-                    "cart_order_status"
-                ] = "cancelled"
-
-                print(
-                    "\nBUYER STATE:"
-                )
-
-                print(current_state)
-
-                print()
-
-                continue
-
-            else:
-
-                print(
-                    "\nPlease answer "
-                    "'yes' or 'no'.\n"
-                )
-
-                continue
-
-        # ====================================================
-        # NORMAL SHOPPING REQUEST
-        # ====================================================
-
         try:
-
-            # ------------------------------------------------
-            # Start a fresh shopping request while preserving
-            # the session ID.
-            # ------------------------------------------------
-
-            result = await buyer_graph.ainvoke({
-                "user_query": query,
-                "session_id": session_id,
-            })
-
-            # ------------------------------------------------
-            # Save the latest state.
-            # ------------------------------------------------
-
-            current_state = result
-
-            # ------------------------------------------------
-            # Display final response
-            # ------------------------------------------------
-
-            print()
-
-            if result.get("final_response"):
-
-                print(
-                    result["final_response"]
-                )
-
-            # ------------------------------------------------
-            # Display cart separately when available.
-            # ------------------------------------------------
-
-            cart = result.get(
-                "cart"
+            result = await buyer_service.send_message(
+                message=query,
+                session_id=session_id,
+                buyer_id=buyer_id,
             )
 
-            if (
-                cart
-                and cart.get("items")
-                and result.get("cart_complete")
-            ):
+            print()
+            print(result["reply"])
 
-                print(
-                    "\nCart:"
-                )
-
+            cart = result.get("cart") or {}
+            if cart.get("items"):
+                print("\nCart:")
                 for item in cart["items"]:
-
                     print(
-                        f"- "
-                        f"{item.get('product_name')} "
-                        f"× {item.get('quantity')} "
-                        f"from "
-                        f"{item.get('merchant')} "
-                        f"= ₹"
+                        f"- {item.get('product_name')} × "
+                        f"{item.get('quantity')} from "
+                        f"{item.get('merchant')} = ₹"
                         f"{item.get('total_price')}"
                     )
+                print(f"Total: ₹{cart.get('total', 0)}")
 
-                print(
-                    f"Total: ₹"
-                    f"{cart.get('total', 0)}"
-                )
-
-            # ------------------------------------------------
-            # If the graph asks for confirmation, tell user.
-            # ------------------------------------------------
-
-            if result.get(
-                "awaiting_confirmation"
-            ):
-
-                print(
-                    "\nProceed with purchase? "
-                    "(yes/no)"
-                )
-
-            print(
-                "\nBUYER STATE:"
-            )
-
-            print(result)
-
+            if result["checkout"].get("awaiting_confirmation"):
+                print("\nAwaiting your confirmation.")
             print()
 
-        except Exception as e:
+        except Exception as exc:
+            print(f"\nError: {type(exc).__name__}: {exc}\n")
 
-            print(
-                f"\nError: {e}\n"
-            )
-
-
-# ============================================================
-# ENTRY POINT
-# ============================================================
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--buyer-id",
+        help="Stable non-secret identifier to reuse preferences across sessions.",
+    )
+    args = parser.parse_args()
+    asyncio.run(main(args.buyer_id))

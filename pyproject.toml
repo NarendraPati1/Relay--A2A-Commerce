@@ -1,7 +1,7 @@
 [project]
 name = "after"
 version = "0.1.0"
-description = "Add your description here"
+description = "Relay A2A Commerce Agent"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -13,4 +13,20 @@ dependencies = [
     "razorpay>=2.0.1",
     "sentence-transformers>=6.0.1",
     "uvicorn>=0.52.4",
+]
+
+[tool.pytest.ini_options]
+pythonpath = [
+    "backend"
+]
+
+[tool.pyright]
+extraPaths = [
+    "backend"
+]
+
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
 ]

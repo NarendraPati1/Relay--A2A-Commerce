@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # ── Buyer Agent + Frontend ────────────────────────────────────────────────
+  # Serves the landing page, the interactive workspace, and the buyer A2A
+  # agent on a single port.  Merchant sub-processes are auto-spawned inside
+  # the container by the lifespan hook (A2A_AUTO_START_MERCHANTS=true).
+  relay-buyer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: relay-a2a:latest
+    container_name: relay-buyer-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONPATH=/app/backend
+      - A2A_AUTO_START_MERCHANTS=true
+      # Override the merchant base URL when running behind a proxy or in k8s.
+      # - MERCHANT_BASE_URL=http://relay-merchants:9000
+    env_file:
+      - .env          # GROQ_API_KEY, RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3

@@ -1,5 +1,6 @@
 from retrieval.vector_store import product_vector_store
 from data.products import PRODUCTS
+from retrieval.reranker import product_reranker
 
 
 RRF_K = 60
@@ -120,15 +121,22 @@ def search_products(query: str, top_k: int = 5):
     exact_results = exact_search(query)
 
     # 2. Semantic retrieval
+    candidate_limit = max(top_k * 3, top_k)
     vector_results = product_vector_store.search(
         query,
-        top_k=top_k,
+        top_k=candidate_limit,
     )
 
     # 3. RRF fusion
     fused_results = reciprocal_rank_fusion(
         exact_results,
         vector_results,
+    )
+
+    # Rerank only the small first-stage candidate set. It stays disabled until
+    # the corresponding local weights have been provisioned.
+    fused_results = product_reranker.rerank(
+        query, fused_results[:candidate_limit]
     )
 
     # 4. Return top candidates

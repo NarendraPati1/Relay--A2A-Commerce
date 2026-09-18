@@ -18,11 +18,17 @@ from agents.merchant.commerce import MerchantCommerceService
 
 
 class MerchantAgentExecutor(AgentExecutor):
-    def __init__(self, merchant_config: dict[str, Any]):
-        self.service = MerchantCommerceService(
+    def __init__(
+        self,
+        merchant_config: dict[str, Any],
+        service: MerchantCommerceService | None = None,
+    ):
+        self.service = service or MerchantCommerceService(
             merchant_id=merchant_config["id"],
             merchant_name=merchant_config["name"],
             inventory=merchant_config["inventory"],
+            discount_rules=merchant_config.get("discount_rules", []),
+            recommendation_policy=merchant_config.get("recommendation_policy", {}),
         )
 
     async def execute(
