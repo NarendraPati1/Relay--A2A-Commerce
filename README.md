@@ -7,7 +7,7 @@
 > **Documentation**
 >
 > - [System Architecture](architecture.md) — How the Buyer Agent, Merchant Agents, memory, retrieval, A2A communication, and payment boundaries work.
-> - [Interactive Demo](demo.md) — Screenshots and a simple walkthrough of the workspace, cart negotiation, and checkout settlement.
+> - [Demo Screenshots](demo.md) — Screenshots and a simple walkthrough of the workspace, cart negotiation, and checkout settlement.
 
 ## Memory Subsystem & State Persistence
 
